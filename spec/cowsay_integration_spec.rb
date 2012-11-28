@@ -1,6 +1,7 @@
 require 'cowsay'
 
-describe Cowsay::Cow do
+describe 'a cow object' do
+  subject { Cowsay.new_cow }
   describe '#say' do
     it 'returns an ascii cow' do
       expected = (<<-'RUBY').strip

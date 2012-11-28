@@ -1,5 +1,10 @@
 module Cowsay
+  def self.new_cow(*args)
+    Cow.new(*args)
+  end
+
   class Cow
+
     def say(message)
       cowsay_path = File.join(File.dirname(__FILE__), '..', 'bin', 'cowsay')
       perl_path = '/usr/bin/perl'
