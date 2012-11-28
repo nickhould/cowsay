@@ -1,7 +1,11 @@
 module Cowsay
   class Cow
     def say(message)
-      IO.popen(['cowsay', message]) do |process|
+      cowsay_path = File.join(File.dirname(__FILE__), '..', 'bin', 'cowsay')
+      perl_path = '/usr/bin/perl'
+      cows_path = File.join(File.dirname(__FILE__), 'cows')
+      env = { 'COWPATH' => cows_path.to_s }
+      IO.popen([env, perl_path, cowsay_path, message]) do |process|
         process.read
       end
     end
