@@ -26,4 +26,20 @@ describe 'The Cow app' do
       result = last_response.body.strip
       result.should eq(expected)
   end
+
+  it 'generates a goodbye cow' do
+    expected = (<<-'RUBY').strip
+ ___________ 
+< Good bye! >
+ ----------- 
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+    RUBY
+    get '/', 'message' => 'Good bye!'
+    result = last_response.body.strip
+    result.should eq(expected)
+  end
 end
