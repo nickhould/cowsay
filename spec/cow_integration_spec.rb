@@ -11,6 +11,10 @@ describe 'The Cow app' do
     Sinatra::Application
   end
 
+  let(:response_body) {
+    last_response.body.strip
+  }
+
   it 'generates a basic cow' do
       expected = (<<-'RUBY').strip
  _______ 
@@ -23,7 +27,7 @@ describe 'The Cow app' do
                 ||     ||
       RUBY
       get '/'
-      result = last_response.body.strip
+      result = response_body
       result.should eq(expected)
   end
 
@@ -39,7 +43,33 @@ describe 'The Cow app' do
                 ||     ||
     RUBY
     get '/', 'message' => 'Good bye!'
-    result = last_response.body.strip
+    result = response_body
     result.should eq(expected)
+  end
+
+  it 'accept a cowfile parameter' do
+    expected = (<<-'END').strip
+ _______ 
+< Hello >
+ ------- 
+\                             .       .
+ \                           / `.   .' " 
+  \                  .---.  <    > <    >  .---.
+   \                 |    \  \ - ~ ~ - /  /    |
+         _____          ..-~             ~-..-~
+        |     |   \~~~\.'                    `./~~~/
+       ---------   \__/                        \__/
+      .'  O    \     /               /       \  " 
+     (_____,    `._.'               |         }  \/~~~/
+      `----.          /       }     |        /    \__/
+            `-.      |       /      |       /      `. ,~~|
+                ~-.__|      /_ - ~ ^|      /- _      `..-'   
+                     |     /        |     /     ~-.     `-. _  _  _
+                     |_____|        |_____|         ~ - . _ _ _ _ _>    
+END
+    get '/', 'cowfile' => 'stegosaurus'
+    result = response_body
+    result.should eq(expected)
+
   end
 end
